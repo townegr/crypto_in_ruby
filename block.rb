@@ -1,5 +1,6 @@
 require 'colorize'
 require 'digest'
+require_relative 'transaction'
 
 class Block
   attr_reader :prev_blk_hash, :txn
