@@ -1,21 +1,27 @@
-require_relative 'g_coin'
 require 'faraday'
 
-URL = 'http://localhost'
-PORT = 4567
+class Client
+  URL = 'http://localhost'
 
-def create_user name
-  Faraday.post("#{origin}/users", name: name).body
-end
+  def self.gossip port, peers, blockchain
+    begin
+      Faraday.post("#{origin}/gossip", peers: peers, blockchain: blockchain).body
+    rescue Faraday::ConnectionFailed => e
+      raise
+    end
+  end
 
-def get_balance user
-  Faraday.get("#{origin}/balance", user: user).body
-end
+  def self.get_pub_key port
+    Faraday.get("#{origin}/pub_key").body
+  end
 
-def transfer from, to, amount
-  Faraday.post("#{origin}/transfers", from: from, to: to, amount: amount).body
-end
+  def self.send_money port, to, amount
+    Faraday.post("#{origin}/send_money", to: to, amount: amount).body
+  end
 
-def origin
-  "#{URL}:#{PORT}"
+  private
+
+  def origin
+    "#{URL}:#{PORT}"
+  end
 end
