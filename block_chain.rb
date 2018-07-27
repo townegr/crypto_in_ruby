@@ -4,7 +4,7 @@ class BlockChain
   attr_reader :blocks
 
   def initialize originator_pub_key, originator_priv_key
-    @blocks = [Block.create_genesis_block originator_pub_key, originator_priv_key]
+    @blocks = [Block.create_genesis_block(originator_pub_key, originator_priv_key)]
   end
 
   def length

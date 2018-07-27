@@ -8,6 +8,11 @@ class Block
   NONCE_VALUE = 'nMCwCAQACBQDXLocZAgMBAAECBHjwSh0CAwD+JwIDANi/AgMA1xcCAgXNAgJzRA'
   NUM_ZEROES = 5
 
+  def self.create_genesis_block pub_key, priv_key
+    genesis_txn = Transaction.new nil, pub_key, 500_000, priv_key
+    new genesis_txn, nil
+  end
+
   def initialize txn, prev_blk
     raise TypeError unless txn.is_a?(Transaction)
     @txn = txn
